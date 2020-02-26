@@ -1,11 +1,14 @@
-var findDisappearedNumbers = function(nums) {
-	if(nums.length === 0){
-		return [];
-	}
+var firstMissingPositive = function(nums) {
 
 	let arr = [];
 	let full_count = nums.length;
-	nums = sortNums(nums);
+	nums = prepareNums(nums);
+
+	if(nums.length === 0){
+		return 1;
+	}else if(nums[0] === 1 && nums.length === 1){
+		return 2;
+	}
 
 	for(let i = 0, j = 1; i < full_count; i++, j++){
 		if(j !== nums[i]){
@@ -18,15 +21,24 @@ var findDisappearedNumbers = function(nums) {
 		}
 	}
 
-	return arr;
+	if(arr.length){
+		return arr[0];
+	}else{
+		return nums[nums.length-1]+1;
+	}	
 };
 
-let sortNums = (input) => {
+let prepareNums = (input) => {
 	var output = [];
 	var inserted;
 
 	for (var i = 0, ii = input.length ; i < ii ; i++){
 	  inserted = false;
+
+	  if(input[i] <= 0){
+	  	continue;
+	  }
+
 	  for (var j = 0, jj = output.length ; j < jj ; j++){
 	    if (input[i] < output[j]){
 	      inserted = true;
@@ -48,4 +60,4 @@ let sortNums = (input) => {
 	return output;
 }
 
-console.log(findDisappearedNumbers([-2, 3, 3]));
+console.log(firstMissingPositive([2,1]));
